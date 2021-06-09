@@ -1,21 +1,39 @@
 import React, {Component} from 'react'
-
+import TodoDataService from '../../api/todo/TodoDataService.js'
+import AuthenticationService from './AuthenticationService.js'
 
 class ListTodosComponent extends Component{
     constructor(props){
+        console.log('constructor')
         super(props)
         this.state={
             todos:
             [
-            {id:1,description:'Learn React',done:false,targetDate:new Date('2021/06/04')},
-            {id:2,description:'Become an Expert at React',done:false,targetDate:new Date('2021/08/28')},
-            {id:3,description:'Visit Australia',done:false,targetDate:new Date('2022/01/24')}
+            // {id:1,description:'Learn React',done:false,targetDate:new Date('2021/06/04')},
+            // {id:2,description:'Become an Expert at React',done:false,targetDate:new Date('2021/08/28')},
+            // {id:3,description:'Visit Australia',done:false,targetDate:new Date('2022/01/24')}
             ]
         }
     }
 
+    componentWillUnmount(){
+        console.log('componentWillUnmount')
+    }
+    shouldComponentUpdate(){}
+    componentDidMount(){
+        console.log('componentDidMount')
+            let username = AuthenticationService.getLoggedInUserName();
 
+            TodoDataService.retrieveAllTodos(username)
+            .then(
+                response => {
+                    // console.log(response)
+                    this.setState({todos:response.data})
+                }
+            )
+    }
     render(){
+        console.log('render')
         return (        
                 <div>
                     <h1>List Todos</h1>
