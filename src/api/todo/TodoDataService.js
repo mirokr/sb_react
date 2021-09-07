@@ -8,6 +8,9 @@ class TodoDataService{
         // console.log('executed service')
     }
 
+deleteTodo(name, id){
+    return axios.delete(`http://localhost:8080/users/${name}/todos/${id}`)
+}
 
 
 
